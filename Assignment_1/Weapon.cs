@@ -27,8 +27,22 @@ namespace Assignment1
 
         // TODO: add sort for each property:
         // CompareByType
+        public static int CompareByType(Weapon left, Weapon right)
+        {
+            return left.Type.CompareTo(right.Type);
+        }
+
         // CompareByRarity
+        public static int CompareByRarity(Weapon left, Weapon right)
+        {
+            return left.Rarity.CompareTo(right.Rarity);
+        }
+
         // CompareByBaseAttack
+        public static int CompareByBaseAttack(Weapon left, Weapon right)
+        {
+            return left.BaseAttack.CompareTo(right.BaseAttack);
+        }
 
         /// <summary>
         /// The Weapon string with all the properties
@@ -38,7 +52,7 @@ namespace Assignment1
         {
             // TODO: construct a comma seperated value string
             // Name,Type,Rarity,BaseAttack
-            return "This is not implemented";
+            return $"{Name},{Type},{Rarity},{BaseAttack}";
         }
     }
 }

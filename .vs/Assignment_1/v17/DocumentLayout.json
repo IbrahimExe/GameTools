@@ -1,0 +1,91 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Ibrahim\\Documents\\GitHub\\VGP232_Tools_Assignment1\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B2D88FFD-6375-4282-B15B-3726747A1D6E}|Assignment_1\\Assignment_1.csproj|c:\\users\\ibrahim\\documents\\github\\vgp232_tools_assignment1\\assignment_1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2D88FFD-6375-4282-B15B-3726747A1D6E}|Assignment_1\\Assignment_1.csproj|solutionrelative:assignment_1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2D88FFD-6375-4282-B15B-3726747A1D6E}|Assignment_1\\Assignment_1.csproj|c:\\users\\ibrahim\\documents\\github\\vgp232_tools_assignment1\\assignment_1\\assignment_1.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{B2D88FFD-6375-4282-B15B-3726747A1D6E}|Assignment_1\\Assignment_1.csproj|solutionrelative:assignment_1\\assignment_1.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2D88FFD-6375-4282-B15B-3726747A1D6E}|Assignment_1\\Assignment_1.csproj|c:\\users\\ibrahim\\documents\\github\\vgp232_tools_assignment1\\assignment_1\\weapon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2D88FFD-6375-4282-B15B-3726747A1D6E}|Assignment_1\\Assignment_1.csproj|solutionrelative:assignment_1\\weapon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B2D88FFD-6375-4282-B15B-3726747A1D6E}|Assignment_1\\Assignment_1.csproj|c:\\users\\ibrahim\\documents\\github\\vgp232_tools_assignment1\\assignment_1\\data.csv||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{B2D88FFD-6375-4282-B15B-3726747A1D6E}|Assignment_1\\Assignment_1.csproj|solutionrelative:assignment_1\\data.csv||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "data.csv",
+              "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\VGP232_Tools_Assignment1\\Assignment_1\\data.csv",
+              "RelativeDocumentMoniker": "Assignment_1\\data.csv",
+              "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\VGP232_Tools_Assignment1\\Assignment_1\\data.csv",
+              "RelativeToolTip": "Assignment_1\\data.csv",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002120|",
+              "WhenOpened": "2026-01-13T00:31:14.336Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Weapon.cs",
+              "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\VGP232_Tools_Assignment1\\Assignment_1\\Weapon.cs",
+              "RelativeDocumentMoniker": "Assignment_1\\Weapon.cs",
+              "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\VGP232_Tools_Assignment1\\Assignment_1\\Weapon.cs",
+              "RelativeToolTip": "Assignment_1\\Weapon.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAmwDkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-12T20:57:52.511Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\VGP232_Tools_Assignment1\\Assignment_1\\Program.cs",
+              "RelativeDocumentMoniker": "Assignment_1\\Program.cs",
+              "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\VGP232_Tools_Assignment1\\Assignment_1\\Program.cs",
+              "RelativeToolTip": "Assignment_1\\Program.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAgwBUBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-12T20:57:00.492Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Assignment_1",
+              "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\VGP232_Tools_Assignment1\\Assignment_1\\Assignment_1.csproj",
+              "RelativeDocumentMoniker": "Assignment_1\\Assignment_1.csproj",
+              "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\VGP232_Tools_Assignment1\\Assignment_1\\Assignment_1.csproj",
+              "RelativeToolTip": "Assignment_1\\Assignment_1.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-01-12T22:20:03Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

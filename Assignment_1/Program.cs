@@ -42,15 +42,18 @@ namespace Assignment1
                 {
                     Console.WriteLine("-i <path> or --input <path> : loads the input file path specified (required)");
                     Console.WriteLine("-o <path> or --output <path> : saves result in the output file path specified (optional)");
-                    
+
                     // TODO: include help info for count
                     //"-c or --count : displays the number of entries in the input file (optional).";
-                    
+                    Console.WriteLine("-c or --count : displays the number of entries");
+
                     // TODO: include help info for append
                     //"-a or --append : enables append mode when writing to an existing output file (optional)";
+                    Console.WriteLine("-a or --append : appends to an existing output file");
 
                     // TODO: include help info for sort
                     //"-s or --sort <column name> : outputs the results sorted by column name";
+                    Console.WriteLine("-s or --sort <column name> : sorts results by column name");
 
                     break;
                 }
@@ -66,10 +69,14 @@ namespace Assignment1
                         if (string.IsNullOrEmpty(inputFile))
                         {
                             // TODO: print no input file specified.
+                            Console.WriteLine("No input file specified!");
+                            return;
                         }
                         else if (!File.Exists(inputFile))
                         {
                             // TODO: print the file specified does not exist.
+                            Console.WriteLine("Input file does not exist!");
+                            return;
                         }
                         else
                         {
@@ -81,7 +88,19 @@ namespace Assignment1
                 else if (args[i] == "-s" || args[i] == "--sort")
                 {
                     // TODO: set the sortEnabled flag and see if the next argument is set for the column name
+                    sortEnabled = true;
+
                     // TODO: set the sortColumnName string used for determining if there's another sort function.
+                    if (args.Length > i + 1)
+                    {
+                        ++i;
+                        sortColumnName = args[i];
+                    }
+                    else
+                    {
+                        Console.WriteLine("No column name specified for sorting!");
+                        return;
+                    }
                 }
                 else if (args[i] == "-c" || args[i] == "--count")
                 {
@@ -90,6 +109,7 @@ namespace Assignment1
                 else if (args[i] == "-a" || args[i] == "--append")
                 {
                     // TODO: set the appendToFile flag
+                    appendToFile = true;
                 }
                 else if (args[i] == "-o" || args[i] == "--output")
                 {
@@ -102,27 +122,48 @@ namespace Assignment1
                         if (string.IsNullOrEmpty(filePath))
                         {
                             // TODO: print No output file specified.
+                            Console.WriteLine("No output file specified!");
+                            return;
                         }
                         else
                         {
                             // TODO: set the output file to the outputFile
+                            outputFile = filePath;
                         }
                     }
                 }
                 else
                 {
                     Console.WriteLine("The argument Arg[{0}] = [{1}] is invalid", i, args[i]);
+                    return;
                 }
             }
 
             if (sortEnabled)
             {
                 // TODO: add implementation to determine the column name to trigger a different sort. (Hint: column names are the 4 properties of the weapon class)
-                
-                // print: Sorting by <column name> e.g. BaseAttack
+                Console.WriteLine("Sorting by {0}.", sortColumnName);
 
+                // print: Sorting by <column name> e.g. BaseAttack
                 // Sorts the list based off of the Weapon name.
-                results.Sort(Weapon.CompareByName);
+                switch (sortColumnName.ToLower())
+                {
+                    case "name":
+                        results.Sort(Weapon.CompareByName);
+                        break;
+                    case "type":
+                        results.Sort(Weapon.CompareByType);
+                        break;
+                    case "rarity":
+                        results.Sort(Weapon.CompareByRarity);
+                        break;
+                    case "baseattack":
+                        results.Sort(Weapon.CompareByBaseAttack);
+                        break;
+                    default:
+                        Console.WriteLine("Invalid sort column.");
+                        return;
+                }
             }
 
             if (displayCount)
@@ -151,10 +192,16 @@ namespace Assignment1
                     {
                         // Hint: use writer.WriteLine
                         // TODO: write the header of the output "Name,Type,Rarity,BaseAttack"
-                        
+                        writer.WriteLine("Name,Type,Rarity,BaseAttack");
+
                         // TODO: use the writer to output the results.
+                        foreach (Weapon w in results)
+                        {
+                            writer.WriteLine(w.ToString());
+                        }
 
                         // TODO: print out the file has been saved.
+                        Console.WriteLine("File saved to " + outputFile);
                     }
                 }
                 else
@@ -201,12 +248,27 @@ namespace Assignment1
                 {
                     string line = reader.ReadLine();
                     // string[] values = line.Split(',');
+                    string[] values = line.Split(',');
 
                     Weapon weapon = new Weapon();
                     // TODO: validate that the string array the size expected.
-                    // TODO: use TryParse for stats/number values.
+                    if (values.Length < 4)
+                        continue;
+
                     // Populate the properties of the Weapon
+                    // Populate the properties of the Weapon
+                    weapon.Name = values[0];
+                    weapon.Type = values[1];
+
+                    // TODO: use TryParse for stats/number values.
+                    int.TryParse(values[2], out int rarity);
+                    int.TryParse(values[3], out int baseAttack);
+
+                    weapon.Rarity = rarity;
+                    weapon.BaseAttack = baseAttack;
+
                     // TODO: Add the Weapon to the list
+                    output.Add(weapon);
                 }
             }
 

@@ -1,0 +1,16 @@
+C:\Users\Ibrahim\Documents\GitHub\VGP232_Tools_Assignment1\Assignment_1\bin\Debug\net8.0\Assignment_1.exe
+C:\Users\Ibrahim\Documents\GitHub\VGP232_Tools_Assignment1\Assignment_1\bin\Debug\net8.0\data.csv
+C:\Users\Ibrahim\Documents\GitHub\VGP232_Tools_Assignment1\Assignment_1\bin\Debug\net8.0\Assignment_1.deps.json
+C:\Users\Ibrahim\Documents\GitHub\VGP232_Tools_Assignment1\Assignment_1\bin\Debug\net8.0\Assignment_1.runtimeconfig.json
+C:\Users\Ibrahim\Documents\GitHub\VGP232_Tools_Assignment1\Assignment_1\bin\Debug\net8.0\Assignment_1.dll
+C:\Users\Ibrahim\Documents\GitHub\VGP232_Tools_Assignment1\Assignment_1\bin\Debug\net8.0\Assignment_1.pdb
+C:\Users\Ibrahim\Documents\GitHub\VGP232_Tools_Assignment1\Assignment_1\obj\Debug\net8.0\Assignment_1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ibrahim\Documents\GitHub\VGP232_Tools_Assignment1\Assignment_1\obj\Debug\net8.0\Assignment_1.AssemblyInfoInputs.cache
+C:\Users\Ibrahim\Documents\GitHub\VGP232_Tools_Assignment1\Assignment_1\obj\Debug\net8.0\Assignment_1.AssemblyInfo.cs
+C:\Users\Ibrahim\Documents\GitHub\VGP232_Tools_Assignment1\Assignment_1\obj\Debug\net8.0\Assignment_1.csproj.CoreCompileInputs.cache
+C:\Users\Ibrahim\Documents\GitHub\VGP232_Tools_Assignment1\Assignment_1\obj\Debug\net8.0\Assignment_1.sourcelink.json
+C:\Users\Ibrahim\Documents\GitHub\VGP232_Tools_Assignment1\Assignment_1\obj\Debug\net8.0\Assignment_1.dll
+C:\Users\Ibrahim\Documents\GitHub\VGP232_Tools_Assignment1\Assignment_1\obj\Debug\net8.0\refint\Assignment_1.dll
+C:\Users\Ibrahim\Documents\GitHub\VGP232_Tools_Assignment1\Assignment_1\obj\Debug\net8.0\Assignment_1.pdb
+C:\Users\Ibrahim\Documents\GitHub\VGP232_Tools_Assignment1\Assignment_1\obj\Debug\net8.0\Assignment_1.genruntimeconfig.cache
+C:\Users\Ibrahim\Documents\GitHub\VGP232_Tools_Assignment1\Assignment_1\obj\Debug\net8.0\ref\Assignment_1.dll
