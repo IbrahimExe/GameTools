@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestPlatform.Utilities;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -12,7 +13,7 @@ namespace Assignment_2_a
     {
         public static void Main(string[] args)
         {
-            // WeaponCollection weapons = new WeaponCollection();
+            WeaponCollection weapons = new WeaponCollection();
 
             // Variables and flags
 
@@ -23,7 +24,7 @@ namespace Assignment_2_a
             string outputFile = string.Empty;
 
             // The flag to determine if we overwrite the output file or append to it.
-            bool appendToFile = false;
+            bool appendToFile = false; // We now use Save method in WeaponCollection
 
             // The flag to determine if we need to display the number of entries
             bool displayCount = false;
@@ -35,7 +36,7 @@ namespace Assignment_2_a
             string sortColumnName = string.Empty;
 
             // The results to be output to a file or to the console
-            List<Weapon> results = new List<Weapon>();
+            // List<Weapon> results = new List<Weapon>(); // We now use WeaponCollection
 
             for (int i = 0; i < args.Length; i++)
             {
@@ -83,7 +84,15 @@ namespace Assignment_2_a
                         else
                         {
                             // This function returns a List<Weapon> once the data is parsed.
-                            results = Parse(inputFile);
+                            // Assignment 1 Method of parsing:
+                            // results = Parse(inputFile);
+
+                            // Assignment 2 Method of parsing:
+                            if (!weapons.Load(inputFile))
+                            {
+                                Console.WriteLine("Failed to load the input file.");
+                                return;
+                            }
                         }
                     }
                 }
@@ -111,7 +120,7 @@ namespace Assignment_2_a
                 else if (args[i] == "-a" || args[i] == "--append")
                 {
                     // TODO: set the appendToFile flag
-                    appendToFile = true;
+                    appendToFile = true; // No longer used for assignment 2a
                 }
                 else if (args[i] == "-o" || args[i] == "--output")
                 {
@@ -146,72 +155,72 @@ namespace Assignment_2_a
                 // TODO: add implementation to determine the column name to trigger a different sort. (Hint: column names are the 4 properties of the weapon class)
                 Console.WriteLine("Sorting by {0}.", sortColumnName);
 
-                // print: Sorting by <column name> e.g. BaseAttack
-                // Sorts the list based off of the Weapon name.
-                switch (sortColumnName.ToLower())
-                {
-                    case "name":
-                        results.Sort(Weapon.CompareByName);
-                        break;
-                    case "type":
-                        results.Sort(Weapon.CompareByType);
-                        break;
-                    case "rarity":
-                        results.Sort(Weapon.CompareByRarity);
-                        break;
-                    case "baseattack":
-                        results.Sort(Weapon.CompareByBaseAttack);
-                        break;
-                    default:
-                        Console.WriteLine("Invalid sort column.");
-                        return;
-                }
+                // Assignment 1 sorting method:
+                // results.Sort(Weapon.CompareByName);
+
+                // Assignment 2a sorting method:
+                weapons.SortBy(sortColumnName);
             }
 
             if (displayCount)
             {
-                Console.WriteLine("There are {0} entries", results.Count);
+                // Assignment 1:
+                // Console.WriteLine("There are {0} entries", results.Count);
+
+                // Assignment 2a:
+                Console.WriteLine("There are {0} entries", weapons.Count);
             }
 
-            if (results.Count > 0)
+            // Assignment 1:
+            // if (results.Count > 0)
+
+            // Assignment 2a:
+            if (weapons.Count > 0)
             {
                 if (!string.IsNullOrEmpty(outputFile))
                 {
-                    FileStream fs;
+                    // Assignment 1:
+                    // FileStream fs;
+
+                    // Assignment 2a: Persistence handled by WeaponCollection and IPersistence
 
                     // Check if the append flag is set, and if so, then open the file in append mode; otherwise, create the file to write.
-                    if (appendToFile && File.Exists((outputFile)))
+                    if (weapons.Save(outputFile))
                     {
-                        fs = File.Open(outputFile, FileMode.Append);
+                        Console.WriteLine("File saved to " + outputFile);
                     }
                     else
                     {
-                        fs = File.Open(outputFile, FileMode.Create);
-                    }
-
-                    // opens a stream writer with the file handle to write to the output file.
-                    using (StreamWriter writer = new StreamWriter(fs))
-                    {
-                        // Hint: use writer.WriteLine
-                        // TODO: write the header of the output "Name,Type,Rarity,BaseAttack"
-                        writer.WriteLine("Name,Type,Rarity,BaseAttack");
-
-                        // TODO: use the writer to output the results.
-                        foreach (Weapon w in results)
-                        {
-                            writer.WriteLine(w.ToString());
-                        }
-
-                        // TODO: print out the file has been saved.
-                        Console.WriteLine("File saved to " + outputFile);
+                        Console.WriteLine("Failed to save output file.");
                     }
                 }
                 else
-                {
-                    // prints out each entry in the weapon list results.
-                    for (int i = 0; i < results.Count; i++)
+                //{
+                //    fs = File.Open(outputFile, FileMode.Create);
+                //}
+
+                //// opens a stream writer with the file handle to write to the output file.
+                //using (StreamWriter writer = new StreamWriter(fs))
+                //{
+                //    // Hint: use writer.WriteLine
+                //    // TODO: write the header of the output "Name,Type,Rarity,BaseAttack"
+                //    writer.WriteLine("Name,Type,Rarity,BaseAttack");
+
+                //    // TODO: use the writer to output the results.
+                //    foreach (Weapon w in results)
+                //    {
+                //        writer.WriteLine(w.ToString());
+                //    }
+
+                //    // TODO: print out the file has been saved.
+                //    Console.WriteLine("File saved to " + outputFile);
                     {
-                        Console.WriteLine(results[i]);
+
+                    // prints out each entry in the weapon list results.
+                    foreach (Weapon weapon in weapons)
+                    {
+                        //Console.WriteLine(results[i]);
+                        Console.WriteLine(weapon);
                     }
                 }
             }
@@ -226,55 +235,51 @@ namespace Assignment_2_a
         /// <returns>The list of Weapons</returns>
         public static List<Weapon> Parse(string fileName)
         {
-            // TODO: implement the streamreader that reads the file and appends each line to the list
-            // note that the result that you get from using read is a string, and needs to be parsed 
-            // to an int for certain fields i.e. HP, Attack, etc.
-            // i.e. int.Parse() and if the results cannot be parsed it will throw an exception
-            // or can use int.TryParse() 
+            // Assignment 1:
+            //using (StreamReader reader = new StreamReader(fileName))
+            //{
+            //    // Skip the first line because header does not need to be parsed.
+            //    // Name,Type,Rarity,BaseAttack
 
-            // streamreader https://msdn.microsoft.com/en-us/library/system.io.streamreader(v=vs.110).aspx
-            // Use string split https://msdn.microsoft.com/en-us/library/system.string.split(v=vs.110).aspx
+            //    string header = reader.ReadLine();
 
-            List<Weapon> output = new List<Weapon>();
+            //    // The rest of the lines looks like the following:
+            //    // Skyward Blade,Sword,5,46
+            //    while (reader.Peek() > 0)
+            //    {
+            //        string line = reader.ReadLine();
+            //        // string[] values = line.Split(',');
+            //        string[] values = line.Split(',');
 
-            using (StreamReader reader = new StreamReader(fileName))
-            {
-                // Skip the first line because header does not need to be parsed.
-                // Name,Type,Rarity,BaseAttack
+            //        Weapon weapon = new Weapon();
+            //        // TODO: validate that the string array the size expected.
+            //        if (values.Length < 4)
+            //            continue;
 
-                string header = reader.ReadLine();
+            //        // Populate the properties of the Weapon
+            //        // Populate the properties of the Weapon
+            //        weapon.Name = values[0];
+            //        weapon.Type = values[1];
 
-                // The rest of the lines looks like the following:
-                // Skyward Blade,Sword,5,46
-                while (reader.Peek() > 0)
-                {
-                    string line = reader.ReadLine();
-                    // string[] values = line.Split(',');
-                    string[] values = line.Split(',');
+            //        // TODO: use TryParse for stats/number values.
+            //        int.TryParse(values[2], out int rarity);
+            //        int.TryParse(values[3], out int baseAttack);
 
-                    Weapon weapon = new Weapon();
-                    // TODO: validate that the string array the size expected.
-                    if (values.Length < 4)
-                        continue;
+            //        weapon.Rarity = rarity;
+            //        weapon.BaseAttack = baseAttack;
 
-                    // Populate the properties of the Weapon
-                    // Populate the properties of the Weapon
-                    weapon.Name = values[0];
-                    weapon.Type = values[1];
+            //        // TODO: Add the Weapon to the list
+            //        output.Add(weapon);
+            //    }
+            //}
 
-                    // TODO: use TryParse for stats/number values.
-                    int.TryParse(values[2], out int rarity);
-                    int.TryParse(values[3], out int baseAttack);
+            // return output;
 
-                    weapon.Rarity = rarity;
-                    weapon.BaseAttack = baseAttack;
+            // Assignment 2:
+            // Parsing has been moved into Weapon.TryParse()
+            // and WeaponCollection.Load()
 
-                    // TODO: Add the Weapon to the list
-                    output.Add(weapon);
-                }
-            }
-
-            return output;
+            return new List<Weapon>();
         }
     }
 }
