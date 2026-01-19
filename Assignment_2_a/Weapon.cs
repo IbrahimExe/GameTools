@@ -73,5 +73,24 @@ namespace Assignment_2_a
                    // Name, Type, Image, Rarity, BaseAttack, SecondaryState, Passive
             return $"{Name}, {Type}, {Image}, {Rarity}, {BaseAttack}, {SecondaryState}, {Passive}";
         }
+
+        static bool TryParse(string rawData, out Weapon weapon)
+        {
+            // Order: Name, Type, Image, Rarity, BaseAttack, SecondaryState, Passive
+            string[] values = rawData.Split(',');
+
+            weapon = new Weapon();
+            if (int.TryParse(values[0], out int baseAttack)) // Wrong index
+            {
+                weapon.BaseAttack = baseAttack;
+            }
+            else
+            {
+                Console.WriteLine($"BaseAttack {values[0]} is invalid format!");
+                return false;
+            }
+
+            return true;
+        }
     }
 }

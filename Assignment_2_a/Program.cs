@@ -12,6 +12,8 @@ namespace Assignment_2_a
     {
         public static void Main(string[] args)
         {
+            // WeaponCollection weapons = new WeaponCollection();
+
             // Variables and flags
 
             // The path to the input file to load.
