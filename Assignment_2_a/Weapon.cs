@@ -18,18 +18,19 @@ namespace Assignment_2_a
             None
         }
 
-        // Name,Type,Rarity,BaseAttack
+        // CSV order:
+        // Name,Type,Image,Rarity,BaseAttack,SecondaryStat,Passive
         public string Name { get; set; }
 
         public WeaponType Type { get; set; }
+
+        public string Image { get; set; }
 
         public int Rarity { get; set; }
 
         public int BaseAttack { get; set; }
 
-        public string Image { get; set; }
-
-        public string SecondaryState { get; set; }
+        public string SecondaryStat { get; set; }
 
         public string Passive { get; set; }
 
@@ -69,26 +70,43 @@ namespace Assignment_2_a
         /// <returns>The Weapon formated string</returns>
         public override string ToString()
         {
-            // TODO: construct a comma seperated value string
-                   // Name, Type, Image, Rarity, BaseAttack, SecondaryState, Passive
-            return $"{Name}, {Type}, {Image}, {Rarity}, {BaseAttack}, {SecondaryState}, {Passive}";
+            return $"{Name},{Type},{Image},{Rarity},{BaseAttack},{SecondaryStat},{Passive}";
         }
 
-        static bool TryParse(string rawData, out Weapon weapon)
+        public static bool TryParse(string rawData, out Weapon weapon)
         {
-            // Order: Name, Type, Image, Rarity, BaseAttack, SecondaryState, Passive
+            weapon = null;
+
+            if (string.IsNullOrWhiteSpace(rawData))
+                return false;
+
             string[] values = rawData.Split(',');
 
-            weapon = new Weapon();
-            if (int.TryParse(values[0], out int baseAttack)) // Wrong index
-            {
-                weapon.BaseAttack = baseAttack;
-            }
-            else
-            {
-                Console.WriteLine($"BaseAttack {values[0]} is invalid format!");
+            // Expect exactly 7 columns
+            if (values.Length != 7)
                 return false;
-            }
+
+            // Parse WeaponType
+            if (!Enum.TryParse(values[1], out WeaponType type))
+                type = WeaponType.None;
+
+            // Parse integers
+            if (!int.TryParse(values[3], out int rarity))
+                return false;
+
+            if (!int.TryParse(values[4], out int baseAttack))
+                return false;
+
+            weapon = new Weapon
+            {
+                Name = values[0],
+                Type = type,
+                Image = values[2],
+                Rarity = rarity,
+                BaseAttack = baseAttack,
+                SecondaryStat = values[5],
+                Passive = values[6]
+            };
 
             return true;
         }
