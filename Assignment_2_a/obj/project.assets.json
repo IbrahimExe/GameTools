@@ -1590,11 +1590,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ibrahim\\Documents\\GitHub\\VGP232_Tools_Assignment1\\Assignment_2_a\\Assignment_2_a.csproj",
+      "projectUniqueName": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_a\\Assignment_2_a.csproj",
       "projectName": "Assignment_2_a",
-      "projectPath": "C:\\Users\\Ibrahim\\Documents\\GitHub\\VGP232_Tools_Assignment1\\Assignment_2_a\\Assignment_2_a.csproj",
+      "projectPath": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_a\\Assignment_2_a.csproj",
       "packagesPath": "C:\\Users\\Ibrahim\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ibrahim\\Documents\\GitHub\\VGP232_Tools_Assignment1\\Assignment_2_a\\obj\\",
+      "outputPath": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_a\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

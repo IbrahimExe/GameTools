@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IyTg0u7TUSw=",
+  "dgSpecHash": "hUolGxUWiho=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Ibrahim\\Documents\\GitHub\\VGP232_Tools_Assignment1\\Assignment_2_a\\Assignment_2_a.csproj",
+  "projectFilePath": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_a\\Assignment_2_a.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ibrahim\\.nuget\\packages\\microsoft.applicationinsights\\2.23.0\\microsoft.applicationinsights.2.23.0.nupkg.sha512",
     "C:\\Users\\Ibrahim\\.nuget\\packages\\microsoft.codecoverage\\18.0.1\\microsoft.codecoverage.18.0.1.nupkg.sha512",
