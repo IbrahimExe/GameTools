@@ -3,32 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{25352E42-C8C5-4CDE-8D0B-0244A1263FD8}|Assignment_2_a\\Assignment_2_a.csproj|c:\\users\\ibrahim\\documents\\github\\gametools\\assignment_2_a\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{25352E42-C8C5-4CDE-8D0B-0244A1263FD8}|Assignment_2_a\\Assignment_2_a.csproj|solutionrelative:assignment_2_a\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{185CC1D1-AEC4-4FFC-9E53-949744CAFF69}|Assignment_2_b\\Assignment_2_b.csproj|c:\\users\\ibrahim\\documents\\github\\gametools\\assignment_2_b\\ixmlserializable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{185CC1D1-AEC4-4FFC-9E53-949744CAFF69}|Assignment_2_b\\Assignment_2_b.csproj|solutionrelative:assignment_2_b\\ixmlserializable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{25352E42-C8C5-4CDE-8D0B-0244A1263FD8}|Assignment_2_a\\Assignment_2_a.csproj|c:\\users\\ibrahim\\documents\\github\\gametools\\assignment_2_a\\assignment_2_a.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
-      "RelativeMoniker": "D:0:0:{25352E42-C8C5-4CDE-8D0B-0244A1263FD8}|Assignment_2_a\\Assignment_2_a.csproj|solutionrelative:assignment_2_a\\assignment_2_a.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+      "AbsoluteMoniker": "D:0:0:{185CC1D1-AEC4-4FFC-9E53-949744CAFF69}|Assignment_2_b\\Assignment_2_b.csproj|c:\\users\\ibrahim\\documents\\github\\gametools\\assignment_2_b\\ijsonserializable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{185CC1D1-AEC4-4FFC-9E53-949744CAFF69}|Assignment_2_b\\Assignment_2_b.csproj|solutionrelative:assignment_2_b\\ijsonserializable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{25352E42-C8C5-4CDE-8D0B-0244A1263FD8}|Assignment_2_a\\Assignment_2_a.csproj|c:\\users\\ibrahim\\documents\\github\\gametools\\assignment_2_a\\assignment_2_a.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{25352E42-C8C5-4CDE-8D0B-0244A1263FD8}|Assignment_2_a\\Assignment_2_a.csproj|solutionrelative:assignment_2_a\\assignment_2_a.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{25352E42-C8C5-4CDE-8D0B-0244A1263FD8}|Assignment_2_a\\Assignment_2_a.csproj|c:\\users\\ibrahim\\documents\\github\\gametools\\assignment_2_a\\unittests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{25352E42-C8C5-4CDE-8D0B-0244A1263FD8}|Assignment_2_a\\Assignment_2_a.csproj|solutionrelative:assignment_2_a\\unittests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{25352E42-C8C5-4CDE-8D0B-0244A1263FD8}|Assignment_2_a\\Assignment_2_a.csproj|c:\\users\\ibrahim\\documents\\github\\gametools\\assignment_2_a\\weaponcollection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{25352E42-C8C5-4CDE-8D0B-0244A1263FD8}|Assignment_2_a\\Assignment_2_a.csproj|solutionrelative:assignment_2_a\\weaponcollection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{25352E42-C8C5-4CDE-8D0B-0244A1263FD8}|Assignment_2_a\\Assignment_2_a.csproj|c:\\users\\ibrahim\\documents\\github\\gametools\\assignment_2_a\\weapon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{25352E42-C8C5-4CDE-8D0B-0244A1263FD8}|Assignment_2_a\\Assignment_2_a.csproj|solutionrelative:assignment_2_a\\weapon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{25352E42-C8C5-4CDE-8D0B-0244A1263FD8}|Assignment_2_a\\Assignment_2_a.csproj|c:\\users\\ibrahim\\documents\\github\\gametools\\assignment_2_a\\iperistence.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{25352E42-C8C5-4CDE-8D0B-0244A1263FD8}|Assignment_2_a\\Assignment_2_a.csproj|solutionrelative:assignment_2_a\\iperistence.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{185CC1D1-AEC4-4FFC-9E53-949744CAFF69}|Assignment_2_b\\Assignment_2_b.csproj|c:\\users\\ibrahim\\documents\\github\\gametools\\assignment_2_b\\icsvserializable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{185CC1D1-AEC4-4FFC-9E53-949744CAFF69}|Assignment_2_b\\Assignment_2_b.csproj|solutionrelative:assignment_2_b\\icsvserializable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -37,7 +21,7 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 200,
+          "DockedWidth": 209,
           "SelectedChildIndex": 1,
           "Children": [
             {
@@ -47,88 +31,41 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_a\\Program.cs",
-              "RelativeDocumentMoniker": "Assignment_2_a\\Program.cs",
-              "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_a\\Program.cs",
-              "RelativeToolTip": "Assignment_2_a\\Program.cs",
-              "ViewState": "AgIAAKYAAAAAAAAAAAAgwLEAAAAiAAAAAAAAAA==",
+              "Title": "IXmlSerializable.cs",
+              "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_b\\IXmlSerializable.cs",
+              "RelativeDocumentMoniker": "Assignment_2_b\\IXmlSerializable.cs",
+              "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_b\\IXmlSerializable.cs",
+              "RelativeToolTip": "Assignment_2_b\\IXmlSerializable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-19T01:28:07.59Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UnitTests.cs",
-              "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_a\\UnitTests.cs",
-              "RelativeDocumentMoniker": "Assignment_2_a\\UnitTests.cs",
-              "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_a\\UnitTests.cs",
-              "RelativeToolTip": "Assignment_2_a\\UnitTests.cs",
-              "ViewState": "AgIAAIcAAAAAAAAAAAAAAKIAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-19T00:49:15.584Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "IPeristence.cs",
-              "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_a\\IPeristence.cs",
-              "RelativeDocumentMoniker": "Assignment_2_a\\IPeristence.cs",
-              "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_a\\IPeristence.cs",
-              "RelativeToolTip": "Assignment_2_a\\IPeristence.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-19T00:45:24.61Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Weapon.cs",
-              "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_a\\Weapon.cs",
-              "RelativeDocumentMoniker": "Assignment_2_a\\Weapon.cs",
-              "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_a\\Weapon.cs",
-              "RelativeToolTip": "Assignment_2_a\\Weapon.cs",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAkwEoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-19T00:40:25.685Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Assignment_2_a.csproj",
-              "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_a\\Assignment_2_a.csproj",
-              "RelativeDocumentMoniker": "Assignment_2_a\\Assignment_2_a.csproj",
-              "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_a\\Assignment_2_a.csproj",
-              "RelativeToolTip": "Assignment_2_a\\Assignment_2_a.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-01-19T00:32:33.605Z",
+              "WhenOpened": "2026-01-29T00:13:10.622Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Assignment_2_a",
-              "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_a\\Assignment_2_a.csproj",
-              "RelativeDocumentMoniker": "Assignment_2_a\\Assignment_2_a.csproj",
-              "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_a\\Assignment_2_a.csproj",
-              "RelativeToolTip": "Assignment_2_a\\Assignment_2_a.csproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-01-19T20:48:07.492Z",
+              "Title": "IJsonSerializable.cs",
+              "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_b\\IJsonSerializable.cs",
+              "RelativeDocumentMoniker": "Assignment_2_b\\IJsonSerializable.cs",
+              "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_b\\IJsonSerializable.cs",
+              "RelativeToolTip": "Assignment_2_b\\IJsonSerializable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-29T00:12:29.062Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "WeaponCollection.cs",
-              "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_a\\WeaponCollection.cs",
-              "RelativeDocumentMoniker": "Assignment_2_a\\WeaponCollection.cs",
-              "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_a\\WeaponCollection.cs",
-              "RelativeToolTip": "Assignment_2_a\\WeaponCollection.cs",
-              "ViewState": "AgIAADwAAAAAAAAAAAAowAkAAAA9AAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "ICsvSerializable.cs",
+              "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_b\\ICsvSerializable.cs",
+              "RelativeDocumentMoniker": "Assignment_2_b\\ICsvSerializable.cs",
+              "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_b\\ICsvSerializable.cs",
+              "RelativeToolTip": "Assignment_2_b\\ICsvSerializable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-19T00:46:14.825Z"
+              "WhenOpened": "2026-01-29T00:11:55.62Z",
+              "EditorCaption": ""
             }
           ]
         }
