@@ -1,24 +1,23 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assignment_2_b
 {
     [TestFixture]
     public class UnitTests
     {
-        private WeaponCollection WeaponCollection;
+        private WeaponCollection collection;
         private string inputPath;
-        private string outputPath;
+        private string weaponsJson;
+        private string weaponsCsv;
+        private string weaponsXml;
+        private string emptyJson;
+        private string emptyCsv;
+        private string emptyXml;
 
         const string INPUT_FILE = "data2.csv";
-        const string OUTPUT_FILE = "output.csv";
 
-        // A helper function to get the directory of where the actual path is.
         private string CombineToAppPath(string filename)
         {
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filename);
@@ -27,140 +26,218 @@ namespace Assignment_2_b
         [SetUp]
         public void SetUp()
         {
+            collection = new WeaponCollection();
             inputPath = CombineToAppPath(INPUT_FILE);
-            outputPath = CombineToAppPath(OUTPUT_FILE);
-            WeaponCollection = new WeaponCollection();
+            weaponsJson = CombineToAppPath("weapons.json");
+            weaponsCsv = CombineToAppPath("weapons.csv");
+            weaponsXml = CombineToAppPath("weapons.xml");
+            emptyJson = CombineToAppPath("empty.json");
+            emptyCsv = CombineToAppPath("empty.csv");
+            emptyXml = CombineToAppPath("empty.xml");
+
+            // ensure no leftover files
+            DeleteIfExists(weaponsJson);
+            DeleteIfExists(weaponsCsv);
+            DeleteIfExists(weaponsXml);
+            DeleteIfExists(emptyJson);
+            DeleteIfExists(emptyCsv);
+            DeleteIfExists(emptyXml);
         }
 
         [TearDown]
-        public void CleanUp()
+        public void TearDown()
         {
-            // We remove the output file after we are done.
-            if (File.Exists(outputPath))
-            {
-                File.Delete(outputPath);
-            }
+            DeleteIfExists(weaponsJson);
+            DeleteIfExists(weaponsCsv);
+            DeleteIfExists(weaponsXml);
+            DeleteIfExists(emptyJson);
+            DeleteIfExists(emptyCsv);
+            DeleteIfExists(emptyXml);
         }
 
-        // WeaponCollection Unit Tests
+        private void DeleteIfExists(string path)
+        {
+            try { if (File.Exists(path)) File.Delete(path); } catch { }
+        }
+
+
+
+        // JSON:load/save tests
         [Test]
-        public void WeaponCollection_GetHighestBaseAttack_HighestValue()
+        public void WeaponCollection_Load_Save_Load_ValidJson()
         {
-            // Expected Value: 48
-            // TODO: call WeaponCollection.GetHighestBaseAttack() and confirm that it matches the expected value using asserts.
-            WeaponCollection.Load(inputPath);
-            Assert.That(WeaponCollection.GetHighestBaseAttack(), Is.EqualTo(48));
-        }
+            Assert.That(collection.Load(inputPath), Is.True);
+            Assert.That(collection.Count, Is.GreaterThan(0));
 
-        [Test]
-        public void WeaponCollection_GetLowestBaseAttack_LowestValue()
-        {
-            // Expected Value: 23
-            // TODO: call WeaponCollection.GetLowestBaseAttack() and confirm that it matches the expected value using asserts.
-            WeaponCollection.Load(inputPath);
-            Assert.That(WeaponCollection.GetLowestBaseAttack(), Is.EqualTo(23));
-        }
+            Assert.That(collection.Save(weaponsJson), Is.True);
 
-        [TestCase(Weapon.WeaponType.Sword, 21)]
-        public void WeaponCollection_GetAllWeaponsOfType_ListOfWeapons(Weapon.WeaponType type, int expectedValue)
-        {
-            // TODO: call WeaponCollection.GetAllWeaponsOfType(type) and confirm that the weapons list returns Count matches the expected value using asserts.
-            WeaponCollection.Load(inputPath);
-            Assert.That(WeaponCollection.GetAllWeaponsOfType(type).Count, Is.EqualTo(expectedValue));
-        }
-
-        [TestCase(5, 10)]
-        public void WeaponCollection_GetAllWeaponsOfRarity_ListOfWeapons(int stars, int expectedValue)
-        {
-            // TODO: call WeaponCollection.GetAllWeaponsOfRarity(stars) and confirm that the weapons list returns Count matches the expected value using asserts.
-            WeaponCollection.Load(inputPath);
-            Assert.That(WeaponCollection.GetAllWeaponsOfRarity(stars).Count, Is.EqualTo(expectedValue));
+            var other = new WeaponCollection();
+            Assert.That(other.Load(weaponsJson), Is.True);
+            Assert.That(other.Count, Is.EqualTo(collection.Count));
         }
 
         [Test]
-        public void WeaponCollection_LoadThatExistAndValid_True()
+        public void WeaponCollection_Load_SaveAsJSON_Load_ValidJson()
         {
-            // TODO: load returns true, expect WeaponCollection with count of 95 .
-            Assert.That(WeaponCollection.Load(inputPath), Is.True);
-            Assert.That(WeaponCollection.Count, Is.EqualTo(95));
+            Assert.That(collection.Load(inputPath), Is.True);
+            Assert.That(collection.SaveAsJSON(weaponsJson), Is.True);
+
+            var other = new WeaponCollection();
+            Assert.That(other.Load(weaponsJson), Is.True);
+            Assert.That(other.Count, Is.EqualTo(collection.Count));
         }
 
         [Test]
-        public void WeaponCollection_LoadThatDoesNotExist_FalseAndEmpty()
+        public void WeaponCollection_Load_SaveAsJSON_LoadJSON_ValidJson()
         {
-            // TODO: load returns false, expect an empty WeaponCollection
-            Assert.That(WeaponCollection.Load("missing.csv!"), Is.False);
-            Assert.That(WeaponCollection.Count, Is.EqualTo(0));
+            Assert.That(collection.Load(inputPath), Is.True);
+            Assert.That(collection.SaveAsJSON(weaponsJson), Is.True);
+
+            var other = new WeaponCollection();
+            Assert.That(other.LoadJSON(weaponsJson), Is.True);
+            Assert.That(other.Count, Is.EqualTo(collection.Count));
         }
 
         [Test]
-        public void WeaponCollection_SaveWithValuesCanLoad_TrueAndNotEmpty()
+        public void WeaponCollection_Load_Save_LoadJSON_ValidJson()
         {
-            // TODO: save returns true, load returns true, and WeaponCollection is not empty.
-            WeaponCollection.Load(inputPath);
+            Assert.That(collection.Load(inputPath), Is.True);
+            Assert.That(collection.Save(weaponsJson), Is.True);
 
-            Assert.That(WeaponCollection.Save(outputPath), Is.True);
+            var other = new WeaponCollection();
+            Assert.That(other.LoadJSON(weaponsJson), Is.True);
+            Assert.That(other.Count, Is.EqualTo(collection.Count));
+        }
 
-            WeaponCollection loaded = new WeaponCollection();
-            Assert.That(loaded.Load(outputPath), Is.True);
-            Assert.That(loaded.Count, Is.GreaterThan(0));
+
+
+        // CSV: load/save tests
+        [Test]
+        public void WeaponCollection_Load_Save_Load_ValidCsv()
+        {
+            Assert.That(collection.Load(inputPath), Is.True);
+            Assert.That(collection.Save(weaponsCsv), Is.True);
+
+            var other = new WeaponCollection();
+            Assert.That(other.Load(weaponsCsv), Is.True);
+            Assert.That(other.Count, Is.EqualTo(collection.Count));
         }
 
         [Test]
-        public void WeaponCollection_SaveEmpty_TrueAndEmpty()
+        public void WeaponCollection_Load_SaveAsCSV_LoadCSV_ValidCsv()
         {
-            // After saving an empty WeaponCollection, load the file and expect WeaponCollection to be empty.
-            WeaponCollection.Clear();
-            Assert.That(WeaponCollection.Save(outputPath));
-            Assert.That(WeaponCollection.Load(outputPath));
-            Assert.That(WeaponCollection.Count == 0);
+            Assert.That(collection.Load(inputPath), Is.True);
+            Assert.That(collection.SaveAsCSV(weaponsCsv), Is.True);
+
+            var other = new WeaponCollection();
+            Assert.That(other.LoadCSV(weaponsCsv), Is.True);
+            Assert.That(other.Count, Is.EqualTo(collection.Count));
         }
 
-        // Weapon Unit Tests
+
+
+        // XML: load/save tests
         [Test]
-        public void Weapon_TryParseValidLine_TruePropertiesSet()
+        public void WeaponCollection_Load_Save_Load_ValidXml()
         {
-            // TODO: create a Weapon with the stats above set properly
-            //Weapon expected = null;
-            // TODO: uncomment this once you added the Type1 and Type2
-            //expected = new Weapon()
-            //{
-            //    Name = "Skyward Blade",
-            //    Type = Weapon.Sword,
-            //    Image = "https://vignette.wikia.nocookie.net/gensin-impact/images/0/03/Weapon_Skyward_Blade.png",
-            //    Rarity = 5,
-            //    BaseAttack = 46,
-            //    SeconardStat = "Energy Recharge",55675675676767667667677676767676
-            //    Passive = "Sky-Piercing Fang"
-            //};
+            Assert.That(collection.Load(inputPath), Is.True);
+            Assert.That(collection.Save(weaponsXml), Is.True);
 
-            string line = "Skyward Blade,Sword,https://vignette.wikia.nocookie.net/gensin-impact/images/0/03/Weapon_Skyward_Blade.png,5,46,Energy Recharge,Sky-Piercing Fang";
-            //Weapon actual = null;
-
-            // TODO: uncomment this once you have TryParse implemented.
-            Assert.That(Weapon.TryParse(line, out Weapon weapon), Is.True);
-
-            Assert.That(weapon.Name, Is.EqualTo("Skyward Blade"));
-            Assert.That(weapon.Type, Is.EqualTo(Weapon.WeaponType.Sword));
-            Assert.That(weapon.Rarity, Is.EqualTo(5));
-            Assert.That(weapon.BaseAttack, Is.EqualTo(46));
-            Assert.That(weapon.SecondaryStat, Is.EqualTo("Energy Recharge"));
-            Assert.That(weapon.Passive, Is.EqualTo("Sky-Piercing Fang"));
-
-            //Assert.That(expectedValue.Name, Is.EqualTo(actual.Name));
-            //Assert.That(expected.Type, Is.EqualTo(actual.Type));
-            //Assert.That(expected.BaseAttack, Is.EqualTo(actual.BaseAttack));
-            // TODO: check for the rest of the properties, Image,Rarity,SecondaryStat,Passive
+            var other = new WeaponCollection();
+            Assert.That(other.Load(weaponsXml), Is.True);
+            Assert.That(other.Count, Is.EqualTo(collection.Count));
         }
 
         [Test]
-        public void Weapon_TryParseInvalidLine_FalseNull()
+        public void WeaponCollection_Load_SaveAsXML_LoadXML_ValidXml()
         {
-            // TODO: use "1,Bulbasaur,A,B,C,65,65", Weapon.TryParse returns false, and Weapon is null.
-            string invalidWeapon = "1,Bulbasaur,A,B,C,65,65";
+            Assert.That(collection.Load(inputPath), Is.True);
+            Assert.That(collection.SaveAsXML(weaponsXml), Is.True);
 
-            Assert.That(Weapon.TryParse(invalidWeapon, out Weapon weapon), Is.False);
-            Assert.That(weapon, Is.Null);
+            var other = new WeaponCollection();
+            Assert.That(other.LoadXML(weaponsXml), Is.True);
+            Assert.That(other.Count, Is.EqualTo(collection.Count));
+        }
+
+
+
+        // Empty save/load tests
+        [Test]
+        public void WeaponCollection_SaveEmpty_Load_ValidJson()
+        {
+            collection.Clear();
+            Assert.That(collection.SaveAsJSON(emptyJson), Is.True);
+
+            var other = new WeaponCollection();
+            Assert.That(other.Load(emptyJson), Is.True);
+            Assert.That(other.Count, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void WeaponCollection_SaveEmpty_Load_ValidCsv()
+        {
+            collection.Clear();
+            Assert.That(collection.SaveAsCSV(emptyCsv), Is.True);
+
+            var other = new WeaponCollection();
+            Assert.That(other.Load(emptyCsv), Is.True);
+            Assert.That(other.Count, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void WeaponCollection_SaveEmpty_Load_ValidXml()
+        {
+            collection.Clear();
+            Assert.That(collection.SaveAsXML(emptyXml), Is.True);
+
+            var other = new WeaponCollection();
+            Assert.That(other.Load(emptyXml), Is.True);
+            Assert.That(other.Count, Is.EqualTo(0));
+        }
+
+
+
+        // Invalid format tests
+        [Test]
+        public void WeaponCollection_Load_SaveJSON_LoadXML_InvalidXml()
+        {
+            Assert.That(collection.Load(inputPath), Is.True);
+            Assert.That(collection.SaveAsJSON(weaponsJson), Is.True);
+
+            var other = new WeaponCollection();
+            // trying to load JSON with XML loader should fail
+            Assert.That(other.LoadXML(weaponsJson), Is.False);
+            Assert.That(other.Count, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void WeaponCollection_Load_SaveXML_LoadJSON_InvalidJson()
+        {
+            Assert.That(collection.Load(inputPath), Is.True);
+            Assert.That(collection.SaveAsXML(weaponsXml), Is.True);
+
+            var other = new WeaponCollection();
+            // trying to load XML with JSON loader = Fail
+            Assert.That(other.LoadJSON(weaponsXml), Is.False);
+            Assert.That(other.Count, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void WeaponCollection_ValidCsv_LoadXML_InvalidXml()
+        {
+            // Loading XML from CSV file = Fail
+            var other = new WeaponCollection();
+            Assert.That(other.LoadXML(inputPath), Is.False);
+            Assert.That(other.Count, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void WeaponCollection_ValidCsv_LoadJSON_InvalidJson()
+        {
+            // Loading JSON from CSV file = Fail
+            var other = new WeaponCollection();
+            Assert.That(other.LoadJSON(inputPath), Is.False);
+            Assert.That(other.Count, Is.EqualTo(0));
         }
     }
 }

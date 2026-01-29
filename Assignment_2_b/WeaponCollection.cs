@@ -1,39 +1,165 @@
-﻿using Assignment_2_b;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Xml.Serialization;
 
 namespace Assignment_2_b
 {
-    public class WeaponCollection : List<Weapon>, IPeristence
+    // Make public so XmlSerializer can work with it better
+    [XmlRoot("WeaponCollection")]
+    public class WeaponCollection : List<Weapon>, ICsvSerializable, IJsonSerializable, IXmlSerializable
     {
-        public bool Load(string filename)
+        // CSV:
+        public bool LoadCSV(string path)
         {
             Clear();
 
-            if (!File.Exists(filename))
-            {
+            if (!File.Exists(path))
                 return false;
-            }
 
             try
             {
-                using (StreamReader reader = new StreamReader(filename))
+                var lines = File.ReadAllLines(path);
+                if (lines.Length <= 1)
+                    return true; 
+
+                // Expect header at line 0; start from 1
+                for (int i = 1; i < lines.Length; i++)
                 {
-                    // Skip header
-                    reader.ReadLine();
+                    string line = lines[i];
+                    if (string.IsNullOrWhiteSpace(line))
+                        continue;
 
-                    while (!reader.EndOfStream)
+                    if (Weapon.TryParse(line, out Weapon w))
                     {
-                        string line = reader.ReadLine();
+                        this.Add(w);
+                    }
+                    else
+                    {
+                        Clear();
+                        return false;
+                    }
+                }
 
-                        if (Weapon.TryParse(line, out Weapon weapon))
+                return true;
+            }
+            catch
+            {
+                Clear();
+                return false;
+            }
+        }
+
+        public bool SaveAsCSV(string path)
+        {
+            try
+            {
+                using (var writer = new StreamWriter(path, false))
+                {
+                    writer.WriteLine("Name,Type,Image,Rarity,BaseAttack,SecondaryStat,Passive");
+                    foreach (var w in this)
+                        writer.WriteLine(w.ToString());
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        // JSON:
+        public bool LoadJSON(string path)
+        {
+            Clear();
+
+            if (!File.Exists(path))
+                return false;
+
+            try
+            {
+                string json = File.ReadAllText(path);
+                var options = new JsonSerializerOptions()
+                {
+                    PropertyNameCaseInsensitive = true,
+                    Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+                };
+
+                var items = JsonSerializer.Deserialize<List<Weapon>>(json, options);
+                if (items == null)
+                    return true; // empty file -> treat as empty collection
+
+                foreach (var w in items)
+                {
+                    if (w == null)
+                    {
+                        Clear();
+                        return false;
+                    }
+                }
+
+                this.AddRange(items);
+                return true;
+            }
+            catch
+            {
+                Clear();
+                return false;
+            }
+        }
+
+        public bool SaveAsJSON(string path)
+        {
+            try
+            {
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+                };
+
+                string json = JsonSerializer.Serialize<List<Weapon>>(this.ToList(), options);
+                File.WriteAllText(path, json);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        // XML:
+        public bool LoadXML(string path)
+        {
+            Clear();
+
+            if (!File.Exists(path))
+                return false;
+
+            try
+            {
+                var serializer = new XmlSerializer(typeof(WeaponCollection));
+                using (var fs = File.OpenRead(path))
+                {
+                    var obj = serializer.Deserialize(fs) as WeaponCollection;
+                    if (obj == null)
+                        return true; // empty xml -> treat as empty collection
+
+                    // Basic validation
+                    foreach (var w in obj)
+                    {
+                        if (w == null)
                         {
-                            Add(weapon);
+                            Clear();
+                            return false;
                         }
                     }
+
+                    this.AddRange(obj);
+                    return true;
                 }
             }
             catch
@@ -41,75 +167,56 @@ namespace Assignment_2_b
                 Clear();
                 return false;
             }
-
-            return true;
         }
 
-        public bool Save(string filename)
+        public bool SaveAsXML(string path)
         {
             try
             {
-                using (StreamWriter writer = new StreamWriter(filename))
+                var serializer = new XmlSerializer(typeof(WeaponCollection));
+                using (var fs = File.Open(path, FileMode.Create))
                 {
-                    // CSV Header
-                    writer.WriteLine("Name,Type,Image,Rarity,BaseAttack,SecondaryStat,Passive");
-
-                    foreach (Weapon weapon in this)
-                    {
-                        writer.WriteLine(weapon.ToString());
-                    }
+                    serializer.Serialize(fs, this);
                 }
+                return true;
             }
             catch
             {
                 return false;
             }
-
-            return true;
         }
 
-        public int GetHighestBaseAttack()
+        // Save / Load by extension:
+        public bool Save(string filename)
         {
-            if (Count == 0)
-                return 0;
-
-            return this.Max(w => w.BaseAttack);
-        }
-
-        public int GetLowestBaseAttack()
-        {
-            if (Count == 0)
-                return 0;
-
-            return this.Min(w => w.BaseAttack);
-        }
-
-        public List<Weapon> GetAllWeaponsOfType(Weapon.WeaponType type)
-        {
-            return this.Where(w => w.Type == type).ToList();
-        }
-
-        public List<Weapon> GetAllWeaponsOfRarity(int stars)
-        {
-            return this.Where(w => w.Rarity == stars).ToList();
-        }
-
-        public void SortBy(string columnName)
-        {
-            switch (columnName.ToLower())
+            string ext = Path.GetExtension(filename)?.ToLowerInvariant();
+            switch (ext)
             {
-                case "name":
-                    Sort(Weapon.CompareByName);
-                    break;
-                case "type":
-                    Sort(Weapon.CompareByType);
-                    break;
-                case "rarity":
-                    Sort(Weapon.CompareByRarity);
-                    break;
-                case "baseattack":
-                    Sort(Weapon.CompareByBaseAttack);
-                    break;
+                case ".csv":
+                    return SaveAsCSV(filename);
+                case ".json":
+                    return SaveAsJSON(filename);
+                case ".xml":
+                    return SaveAsXML(filename);
+                default:
+                    // unsupported extension -> false
+                    return false;
+            }
+        }
+
+        public bool Load(string filename)
+        {
+            string ext = Path.GetExtension(filename)?.ToLowerInvariant();
+            switch (ext)
+            {
+                case ".csv":
+                    return LoadCSV(filename);
+                case ".json":
+                    return LoadJSON(filename);
+                case ".xml":
+                    return LoadXML(filename);
+                default:
+                    return false;
             }
         }
     }

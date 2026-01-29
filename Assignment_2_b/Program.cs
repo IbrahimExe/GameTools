@@ -1,9 +1,8 @@
-﻿using Microsoft.VisualStudio.TestPlatform.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 
-// Assignment 1
+// Assignment 2b
 // NAME: Ibrahim Ishaq
 // STUDENT NUMBER: 2343922
 
@@ -58,7 +57,7 @@ namespace Assignment_2_b
                     //"-s or --sort <column name> : outputs the results sorted by column name";
                     Console.WriteLine("-s or --sort <column name> : sorts results by column name");
 
-                    break;
+                    return;
                 }
                 else if (args[i] == "-i" || args[i] == "--input")
                 {
@@ -77,23 +76,35 @@ namespace Assignment_2_b
                         }
                         else if (!File.Exists(inputFile))
                         {
-                            // TODO: print the file specified does not exist.
-                            Console.WriteLine("Input file does not exist!");
-                            return;
-                        }
-                        else
-                        {
-                            // This function returns a List<Weapon> once the data is parsed.
-                            // Assignment 1 Method of parsing:
-                            // results = Parse(inputFile);
-
-                            // Assignment 2 Method of parsing:
-                            if (!weapons.Load(inputFile))
+                            // Attempt to resolve relative to application directory (helpful when running in VS)
+                            string alt = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, inputFile);
+                            if (File.Exists(alt))
                             {
-                                Console.WriteLine("Failed to load the input file.");
+                                inputFile = alt;
+                            }
+                            else
+                            {
+                                // TODO: print the file specified does not exist.
+                                Console.WriteLine("Input file does not exist!");
                                 return;
                             }
                         }
+
+                        // This function returns a List<Weapon> once the data is parsed.
+                        // Assignment 1 Method of parsing:
+                        // results = Parse(inputFile);
+
+                        // Assignment 2 Method of parsing:
+                        if (!weapons.Load(inputFile))
+                        {
+                            Console.WriteLine("Failed to load the input file.");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No input file specified!");
+                        return;
                     }
                 }
                 else if (args[i] == "-s" || args[i] == "--sort")
@@ -120,7 +131,7 @@ namespace Assignment_2_b
                 else if (args[i] == "-a" || args[i] == "--append")
                 {
                     // TODO: set the appendToFile flag
-                    appendToFile = true; // No longer used for assignment 2a
+                    appendToFile = true; // No longer used for assignment 2a/2b but kept for compatibility
                 }
                 else if (args[i] == "-o" || args[i] == "--output")
                 {
@@ -142,6 +153,11 @@ namespace Assignment_2_b
                             outputFile = filePath;
                         }
                     }
+                    else
+                    {
+                        Console.WriteLine("No output file specified!");
+                        return;
+                    }
                 }
                 else
                 {
@@ -152,14 +168,29 @@ namespace Assignment_2_b
 
             if (sortEnabled)
             {
-                // TODO: add implementation to determine the column name to trigger a different sort. (Hint: column names are the 4 properties of the weapon class)
+                // TODO: add implementation to determine the column name to trigger a different sort. (Hint: column names are the properties of the Weapon class)
                 Console.WriteLine("Sorting by {0}.", sortColumnName);
 
-                // Assignment 1 sorting method:
-                // results.Sort(Weapon.CompareByName);
-
-                // Assignment 2a sorting method:
-                weapons.SortBy(sortColumnName);
+                // Try to call SortBy on WeaponCollection, if it exists. If not, fallback to using Weapon comparators.
+                var sortMethod = weapons.GetType().GetMethod("SortBy", new Type[] { typeof(string) });
+                if (sortMethod != null)
+                {
+                    try
+                    {
+                        sortMethod.Invoke(weapons, new object[] { sortColumnName });
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Sorting failed: " + ex.Message);
+                        // fallback to comparator-based sort below
+                        FallbackSort(weapons, sortColumnName);
+                    }
+                }
+                else
+                {
+                    // Fallback: WeaponCollection.SortBy not present; use comparators
+                    FallbackSort(weapons, sortColumnName);
+                }
             }
 
             if (displayCount)
@@ -167,7 +198,7 @@ namespace Assignment_2_b
                 // Assignment 1:
                 // Console.WriteLine("There are {0} entries", results.Count);
 
-                // Assignment 2a:
+                // Assignment 2a/2b:
                 Console.WriteLine("There are {0} entries", weapons.Count);
             }
 
@@ -182,9 +213,9 @@ namespace Assignment_2_b
                     // Assignment 1:
                     // FileStream fs;
 
-                    // Assignment 2a: Persistence handled by WeaponCollection and IPersistence
+                    // Assignment 2a/2b: Persistence handled by WeaponCollection and specific serializers
 
-                    // Check if the append flag is set, and if so, then open the file in append mode; otherwise, create the file to write.
+                    // If append requested and file exists, we could append; for now Save() overwrites (per spec)
                     if (weapons.Save(outputFile))
                     {
                         Console.WriteLine("File saved to " + outputFile);
@@ -195,31 +226,10 @@ namespace Assignment_2_b
                     }
                 }
                 else
-                //{
-                //    fs = File.Open(outputFile, FileMode.Create);
-                //}
-
-                //// opens a stream writer with the file handle to write to the output file.
-                //using (StreamWriter writer = new StreamWriter(fs))
-                //{
-                //    // Hint: use writer.WriteLine
-                //    // TODO: write the header of the output "Name,Type,Rarity,BaseAttack"
-                //    writer.WriteLine("Name,Type,Rarity,BaseAttack");
-
-                //    // TODO: use the writer to output the results.
-                //    foreach (Weapon w in results)
-                //    {
-                //        writer.WriteLine(w.ToString());
-                //    }
-
-                //    // TODO: print out the file has been saved.
-                //    Console.WriteLine("File saved to " + outputFile);
                 {
-
                     // prints out each entry in the weapon list results.
                     foreach (Weapon weapon in weapons)
                     {
-                        //Console.WriteLine(results[i]);
                         Console.WriteLine(weapon);
                     }
                 }
@@ -229,7 +239,39 @@ namespace Assignment_2_b
         }
 
         /// <summary>
+        /// Fallback sorter when WeaponCollection.SortBy(string) is not available.
+        /// Uses Weapon comparator methods.
+        /// </summary>
+        private static void FallbackSort(List<Weapon> weapons, string sortColumnName)
+        {
+            if (weapons == null || weapons.Count <= 1 || string.IsNullOrWhiteSpace(sortColumnName))
+                return;
+
+            switch (sortColumnName.Trim().ToLowerInvariant())
+            {
+                case "name":
+                    weapons.Sort(Weapon.CompareByName);
+                    break;
+                case "type":
+                    weapons.Sort(Weapon.CompareByType);
+                    break;
+                case "rarity":
+                    weapons.Sort(Weapon.CompareByRarity);
+                    break;
+                case "baseattack":
+                case "base_attack":
+                case "base-attack":
+                    weapons.Sort(Weapon.CompareByBaseAttack);
+                    break;
+                default:
+                    Console.WriteLine("Invalid sort column specified. No sorting performed.");
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Reads the file and line by line parses the data into a List of Weapons
+        /// (Legacy - Assignment 1)
         /// </summary>
         /// <param name="fileName">The path to the file</param>
         /// <returns>The list of Weapons</returns>
@@ -240,9 +282,9 @@ namespace Assignment_2_b
             //{
             //    // Skip the first line because header does not need to be parsed.
             //    // Name,Type,Rarity,BaseAttack
-
+            //
             //    string header = reader.ReadLine();
-
+            //
             //    // The rest of the lines looks like the following:
             //    // Skyward Blade,Sword,5,46
             //    while (reader.Peek() > 0)
@@ -250,24 +292,24 @@ namespace Assignment_2_b
             //        string line = reader.ReadLine();
             //        // string[] values = line.Split(',');
             //        string[] values = line.Split(',');
-
+            //
             //        Weapon weapon = new Weapon();
             //        // TODO: validate that the string array the size expected.
             //        if (values.Length < 4)
             //            continue;
-
+            //
             //        // Populate the properties of the Weapon
             //        // Populate the properties of the Weapon
             //        weapon.Name = values[0];
             //        weapon.Type = values[1];
-
+            //
             //        // TODO: use TryParse for stats/number values.
             //        int.TryParse(values[2], out int rarity);
             //        int.TryParse(values[3], out int baseAttack);
-
+            //
             //        weapon.Rarity = rarity;
             //        weapon.BaseAttack = baseAttack;
-
+            //
             //        // TODO: Add the Weapon to the list
             //        output.Add(weapon);
             //    }
