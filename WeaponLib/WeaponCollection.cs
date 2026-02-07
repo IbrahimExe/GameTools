@@ -219,5 +219,31 @@ namespace WeaponLib
                     return false;
             }
         }
+
+        public void SortBy(string columnName)
+        {
+            switch (columnName.ToLower())
+            {
+                case "name":
+                    this.Sort(Weapon.CompareByName);
+                    break;
+
+                case "type":
+                    this.Sort(Weapon.CompareByType);
+                    break;
+
+                case "rarity":
+                    this.Sort(Weapon.CompareByRarity);
+                    break;
+
+                case "baseattack":
+                    this.Sort(Weapon.CompareByBaseAttack);
+                    break;
+
+                default:
+                    throw new ArgumentException("Invalid sort column");
+            }
+        }
+
     }
 }

@@ -5,13 +5,66 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment_2_c"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <TextBox HorizontalAlignment="Left" Margin="274,217,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="275" Height="139"/>
-        <TextBlock HorizontalAlignment="Left" Margin="328,143,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-        <ComboBox HorizontalAlignment="Left" Margin="353,380,0,0" VerticalAlignment="Top" Width="120"/>
-        <Rectangle HorizontalAlignment="Left" Height="107" Margin="469,72,0,0" Stroke="Black" VerticalAlignment="Top" Width="188"/>
-        <Image HorizontalAlignment="Left" Height="108" Margin="547,279,0,0" VerticalAlignment="Top" Width="170"/>
+        Title="Weapons Editor" Height="650" Width="900">
+<Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <!-- Top buttons -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,10">
+            <Button Name="LoadButton" Width="80" Margin="0,0,10,0" Click="LoadClicked">Load</Button>
+            <Button Name="SaveButton" Width="80" Margin="0,0,10,0" Click="SaveClicked">Save</Button>
+        </StackPanel>
+
+        <!-- Sorting / filtering controls -->
+        <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" Margin="0,0,0,10">
+            <!-- Sort by radio buttons -->
+            <GroupBox Header="Sort By:" Margin="0,0,10,0">
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <RadioButton Content="Name" GroupName="SortBy" Tag="Name" Checked="SortRadioSelected" Margin="3"/>
+                    <RadioButton Content="BaseAttack" GroupName="SortBy" Tag="BaseAttack" Checked="SortRadioSelected" Margin="3"/>
+                    <RadioButton Content="Rarity" GroupName="SortBy" Tag="Rarity" Checked="SortRadioSelected" Margin="3"/>
+                    <RadioButton Content="Passive" GroupName="SortBy" Tag="Passive" Checked="SortRadioSelected" Margin="3"/>
+                    <RadioButton Content="SecondaryStat" GroupName="SortBy" Tag="SecondaryStat" Checked="SortRadioSelected" Margin="3"/>
+                </StackPanel>
+            </GroupBox>
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" VerticalAlignment="Center" Margin="0,0,0,10">
+
+            
+            <!-- Show only type -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0">
+                <TextBlock VerticalAlignment="Center" Margin="0,0,5,0">Show only type:</TextBlock>
+                <ComboBox Name="TypeFilterComboBox" Width="140" SelectionChanged="FilterTypeOnlySelectionChanged"/>
+            </StackPanel>
+
+            <!-- Filter by name -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
+                <TextBlock VerticalAlignment="Center" Margin="0,0,5,0">Filter by Name:</TextBlock>
+                <TextBox Name="FilterNameTextBox" Width="200" TextChanged="FilterNameTextChanged"/>
+            </StackPanel>
+            
+        </StackPanel>
+
+        <!-- Main content: ListBox left, Buttons right -->
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <ListBox Name="WeaponListBox" Grid.Column="0" DisplayMemberPath="Name" Margin="0,0,10,0"/>
+
+            <StackPanel Grid.Column="1" Width="140" VerticalAlignment="Top">
+                <Button Name="AddButton" Click="AddClicked" Margin="0,0,0,10">Add</Button>
+                <Button Name="EditButton" Click="EditClicked" Margin="0,0,0,10">Edit</Button>
+                <Button Name="RemoveButton" Click="RemoveClicked" Margin="0,0,0,10">Remove</Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
