@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment_2_c"
         mc:Ignorable="d"
-        Title="Edit Weapon" Height="400" Width="500">
+        Title="Edit Weapon" Height="450" Width="400">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
