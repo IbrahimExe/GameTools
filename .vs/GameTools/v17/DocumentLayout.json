@@ -26,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -40,9 +40,21 @@
               "RelativeDocumentMoniker": "Assignment_2_c\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_c\\MainWindow.xaml.cs",
               "RelativeToolTip": "Assignment_2_c\\MainWindow.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAuwJwAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-07T01:54:10.579Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_c\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "Assignment_2_c\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_c\\MainWindow.xaml",
+              "RelativeToolTip": "Assignment_2_c\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-02-07T00:49:27.394Z",
               "EditorCaption": ""
             },
             {
@@ -67,18 +79,6 @@
               "RelativeToolTip": "Assignment_2_c\\EditWeaponWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-02-07T02:30:37.063Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MainWindow.xaml",
-              "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_c\\MainWindow.xaml",
-              "RelativeDocumentMoniker": "Assignment_2_c\\MainWindow.xaml",
-              "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_2_c\\MainWindow.xaml",
-              "RelativeToolTip": "Assignment_2_c\\MainWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-02-07T00:49:27.394Z",
               "EditorCaption": ""
             }
           ]

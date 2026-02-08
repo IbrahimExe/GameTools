@@ -5,65 +5,92 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment_2_c"
         mc:Ignorable="d"
-        Title="Weapons Editor" Height="500" Width="400">
-<Grid Margin="10">
+         Title="Weapon Collection Editor" Height="450" Width="500">
+    <Grid Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+
             <RowDefinition Height="Auto"/>
+
             <RowDefinition Height="*"/>
+
         </Grid.RowDefinitions>
 
-        <!-- Top buttons -->
-        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Left" Margin="0,0,0,10">
-            <Button Name="LoadButton" Width="80" Margin="0,0,10,0" Click="LoadClicked">Load</Button>
-            <Button Name="SaveButton" Width="80" Margin="0,0,10,0" Click="SaveClicked">Save</Button>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,8">
+            <Button Name="LoadButton" Width="72" Margin="0,0,8,0" Click="LoadClicked">Load</Button>
+            <Button Name="SaveButton" Width="72" Click="SaveClicked">Save</Button>
         </StackPanel>
 
-        <!-- Sorting / filtering controls -->
-        <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" Margin="0,0,0,10">
-            <!-- Sort by radio buttons -->
-            <GroupBox Header="Sort By:" Margin="0,0,10,0">
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <RadioButton Content="Name" GroupName="SortBy" Tag="Name" Checked="SortRadioSelected" Margin="3"/>
-                    <RadioButton Content="BaseAttack" GroupName="SortBy" Tag="BaseAttack" Checked="SortRadioSelected" Margin="3"/>
-                    <RadioButton Content="Rarity" GroupName="SortBy" Tag="Rarity" Checked="SortRadioSelected" Margin="3"/>
-                    <RadioButton Content="Passive" GroupName="SortBy" Tag="Passive" Checked="SortRadioSelected" Margin="3"/>
-                    <RadioButton Content="SecondaryStat" GroupName="SortBy" Tag="SecondaryStat" Checked="SortRadioSelected" Margin="3"/>
-                </StackPanel>
-            </GroupBox>
-
-        </StackPanel>
-
-        <StackPanel Orientation="Horizontal" Grid.Row="2" VerticalAlignment="Center" Margin="0,0,0,10">
-
-            
-            <!-- Show only type -->
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0">
-                <TextBlock VerticalAlignment="Center" Margin="0,0,5,0">Show only type:</TextBlock>
-                <ComboBox Name="TypeFilterComboBox" Width="140" SelectionChanged="FilterTypeOnlySelectionChanged"/>
-            </StackPanel>
-
-            <!-- Filter by name -->
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
-                <TextBlock VerticalAlignment="Center" Margin="0,0,5,0">Filter by Name:</TextBlock>
-                <TextBox Name="FilterNameTextBox" Width="200" TextChanged="FilterNameTextChanged"/>
-            </StackPanel>
-            
-        </StackPanel>
-
-        <!-- Main content: ListBox left, Buttons right -->
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="1" Margin="10,0,0,8">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="90"/>
+
+                <ColumnDefinition/>
+
             </Grid.ColumnDefinitions>
 
-            <ListBox Name="WeaponListBox" Grid.Column="0" DisplayMemberPath="Name" Margin="0,0,10,0"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Sort By:" VerticalAlignment="Center" Margin="0,2" Height="20"/>
 
-            <StackPanel Grid.Column="1" Width="140" VerticalAlignment="Top">
-                <Button Name="AddButton" Click="AddClicked" Margin="0,0,0,10">Add</Button>
-                <Button Name="EditButton" Click="EditClicked" Margin="0,0,0,10">Edit</Button>
-                <Button Name="RemoveButton" Click="RemoveClicked" Margin="0,0,0,10">Remove</Button>
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,4">
+                <RadioButton Content="Name" GroupName="SortBy" Tag="Name" Checked="SortRadioSelected" Margin="2"/>
+                <RadioButton Content="BaseAttack" GroupName="SortBy" Tag="BaseAttack" Checked="SortRadioSelected" Margin="2"/>
+                <RadioButton Content="Rarity" GroupName="SortBy" Tag="Rarity" Checked="SortRadioSelected" Margin="2"/>
+                <RadioButton Content="Passive" GroupName="SortBy" Tag="Passive" Checked="SortRadioSelected" Margin="2"/>
+                <RadioButton Content="SecondaryStat" GroupName="SortBy" Tag="SecondaryStat" Checked="SortRadioSelected" Margin="2"/>
+            </StackPanel>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Show only type:" VerticalAlignment="Center" Margin="0,2" Height="20"/>
+
+            <ComboBox Grid.Row="1" Grid.Column="1" Name="TypeFilterComboBox" SelectionChanged="FilterTypeOnlySelectionChanged" Margin="10,2,120,2"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Filter by Name:" VerticalAlignment="Center" Margin="0,2" Height="20"/>
+
+            <TextBox Grid.Row="2" Grid.Column="1" Name="FilterNameTextBox" TextChanged="FilterNameTextChanged" Margin="10,2,120,2"/>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="110"/>
+            </Grid.ColumnDefinitions>
+
+            <ListBox Name="WeaponListBox" Grid.Column="0" Margin="0,0,8,0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#EEE" BorderThickness="0,0,0,1" Padding="6">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="13"/>
+                                <TextBlock>
+                                    <Run Text="Type: "/>
+                                    <Run Text="{Binding Type}"/>
+                                </TextBlock>
+                                <TextBlock Text="{Binding Image}" TextWrapping="Wrap" FontSize="11" Foreground="Blue" Margin="0,4,0,0"/>
+                                <TextBlock>
+                                    <Run Text="Rarity: "/><Run Text="{Binding Rarity}" /><Run Text="    "/>
+                                    <Run Text="BaseAttack: "/><Run Text="{Binding BaseAttack}"/>
+                                </TextBlock>
+                                <TextBlock>
+                                    <Run Text="Secondary: "/><Run Text="{Binding SecondaryStat}"/>
+                                </TextBlock>
+                                <TextBlock>
+                                    <Run Text="Passive: "/><Run Text="{Binding Passive}"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <StackPanel Grid.Column="1" VerticalAlignment="Top">
+                <Button Name="AddButton" Click="AddClicked" Height="32" Margin="0,0,0,12">Add</Button>
+                <Button Name="EditButton" Click="EditClicked" Height="32" Margin=" 0,0,0,12">Edit</Button>
+                <Button Name="RemoveButton" Click="RemoveClicked" Height="32" Margin="0,0,0,12">Remove</Button>
             </StackPanel>
         </Grid>
     </Grid>
