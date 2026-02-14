@@ -141,7 +141,7 @@ namespace Assignment_2_c {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Assignment_2_c;component/editweaponwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Assignment_2_c;V1.0.0.0;component/editweaponwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\EditWeaponWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

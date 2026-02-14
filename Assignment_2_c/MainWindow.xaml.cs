@@ -19,7 +19,6 @@ namespace Assignment_2_c
         // Member: the main Weapon collection
         public WeaponCollection mWeaponCollection { get; private set; }
 
-        // Current filtered view (used as ItemsSource)
         private List<Weapon> mCurrentView = new List<Weapon>();
 
         public MainWindow()
@@ -28,7 +27,6 @@ namespace Assignment_2_c
 
             mWeaponCollection = new WeaponCollection();
 
-            // Populate type combobox with enum names + "All"
             var names = Enum.GetNames(typeof(Weapon.WeaponType)).ToList();
             names.Insert(0, "All");
             TypeFilterComboBox.ItemsSource = names;
@@ -39,9 +37,8 @@ namespace Assignment_2_c
             RefreshList();
         }
 
-        // -------------------------
+
         // Event handlers
-        // -------------------------
         private void LoadClicked(object sender, RoutedEventArgs e)
         {
             var dlg = new OpenFileDialog();
@@ -75,7 +72,7 @@ namespace Assignment_2_c
         private void AddClicked(object sender, RoutedEventArgs e)
         {
             var win = new EditWeaponWindow();
-            // temp weapon with default values
+
             win.TempWeapon = new Weapon()
             {
                 Name = "New Weapon",
@@ -105,7 +102,6 @@ namespace Assignment_2_c
                 return;
             }
 
-            // Create a copy to edit (so Cancel won't modify original)
             var temp = new Weapon()
             {
                 Name = selected.Name,
@@ -159,15 +155,13 @@ namespace Assignment_2_c
             string col = rb.Tag as string;
             if (string.IsNullOrWhiteSpace(col)) return;
 
-            // Use SortBy on collection if available; otherwise fallback to RefreshList sort behavior
             try
             {
-                // This will call your WeaponCollection.SortBy implementation from 2b/2c
                 mWeaponCollection.SortBy(col);
             }
             catch
             {
-                // if SortBy doesn't exist, you can still RefreshList and sort in view
+
             }
             RefreshList();
         }
@@ -182,9 +176,8 @@ namespace Assignment_2_c
             RefreshList();
         }
 
-        // -------------------------
+
         // Helper: refresh view and apply filters
-        // -------------------------
         private void RefreshList()
         {
             IEnumerable<Weapon> view = mWeaponCollection;
@@ -199,15 +192,13 @@ namespace Assignment_2_c
                 }
             }
 
-            // Name filter (starts with, case-insensitive)
+            // Name filter
             string nameFilter = FilterNameTextBox.Text ?? string.Empty;
             if (!string.IsNullOrWhiteSpace(nameFilter))
             {
                 view = view.Where(w => w.Name != null && w.Name.StartsWith(nameFilter, StringComparison.OrdinalIgnoreCase));
             }
 
-            // If the collection's SortBy implementation isn't available / used, ensure the view is ordered if any radio selected:
-            // (We let WeaponCollection.SortBy handle sorting if implemented; otherwise do nothing here.)
 
             mCurrentView = view.ToList();
             WeaponListBox.ItemsSource = mCurrentView;

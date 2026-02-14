@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeaponLib", "WeaponLib\Weap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assignment_2_c", "Assignment_2_c\Assignment_2_c.csproj", "{DFF0168A-FF9B-46B8-A26B-F45E63E24E7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextureAtlasLib", "..\..\..\Downloads\VGP232_Assignment3\VGP232_Assignment3\TextureAtlasLib\TextureAtlasLib.csproj", "{A4F9B3CE-56BE-E5AE-6D8F-6AB370310568}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assignment_3", "Assignment_3\Assignment_3.csproj", "{24F7FE38-2E1A-4611-9DF6-0F2172ECEB6F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{DFF0168A-FF9B-46B8-A26B-F45E63E24E7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFF0168A-FF9B-46B8-A26B-F45E63E24E7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFF0168A-FF9B-46B8-A26B-F45E63E24E7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4F9B3CE-56BE-E5AE-6D8F-6AB370310568}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4F9B3CE-56BE-E5AE-6D8F-6AB370310568}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4F9B3CE-56BE-E5AE-6D8F-6AB370310568}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4F9B3CE-56BE-E5AE-6D8F-6AB370310568}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24F7FE38-2E1A-4611-9DF6-0F2172ECEB6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24F7FE38-2E1A-4611-9DF6-0F2172ECEB6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24F7FE38-2E1A-4611-9DF6-0F2172ECEB6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24F7FE38-2E1A-4611-9DF6-0F2172ECEB6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
