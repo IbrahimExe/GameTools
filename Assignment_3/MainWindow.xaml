@@ -5,8 +5,118 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Assignment_3"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Sprite Sheet Generator" Height="600" Width="900">
+    <DockPanel>
 
-    </Grid>
+        <!-- Menu -->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File" Height="30" Width="97">
+                <MenuItem Header="_New" Click="FileNew_Click" />
+                <MenuItem Header="_Open..." Click="FileOpen_Click" />
+                <Separator />
+                <MenuItem Header="_Save" Name="MenuSave" Click="FileSave_Click" IsEnabled="False"/>
+                <MenuItem Header="Save _As..." Click="FileSaveAs_Click" />
+                <Separator />
+                <MenuItem Header="E_xit" Click="FileExit_Click" />
+            </MenuItem>
+
+            <MenuItem Header="_Edit" Height="30" Width="103">
+                <MenuItem Header="_Undo" Click="EditUndo_Click" InputGestureText="Ctrl+Z"/>
+                <MenuItem Header="_Redo" Click="EditRedo_Click" InputGestureText="Ctrl+Y"/>
+                <Separator/>
+                <MenuItem Header="_Copy" Click="EditCopy_Click" InputGestureText="Ctrl+C"/>
+                <MenuItem Header="_Paste" Click="EditPaste_Click" InputGestureText="Ctrl+V"/>
+                <Separator/>
+                <MenuItem Header="_Remove" Click="EditRemove_Click" InputGestureText="Del"/>
+                <MenuItem Header="Remove _All" Click="EditRemoveAll_Click" InputGestureText="Ctrl+Shift+Del"/>
+            </MenuItem>
+        </Menu>
+
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Project name / output row labels -->
+                <RowDefinition Height="Auto"/>
+                <!-- Inputs (labels left, controls right) -->
+                <RowDefinition Height="*"/>
+                <!-- Listbox + buttons -->
+                <RowDefinition Height="Auto"/>
+                <!-- include metadata + progress + generate -->
+
+            </Grid.RowDefinitions>
+
+            <!-- Project filename label -->
+            <TextBlock Grid.Row="0" Text="SpriteSheet.xml" FontWeight="Bold" Margin="0,0,0,8" FontSize="16"/>
+
+            <!-- Left labels / right controls in two-column grid -->
+            <Grid Grid.Row="1" Margin="0,0,0,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="160"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Output Directory -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Output Directory" VerticalAlignment="Center" Margin="0,4"/>
+                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                    <TextBox Name="tbOutputDir" Width="580" Margin="0,0,8,0" />
+                    <Button Name="btnBrowse" Click="BrowseOutput_Click" Width="133" Height="30 ">Browse...</Button>
+                </StackPanel>
+
+                <!-- Filename -->
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Filename (.png)" VerticalAlignment="Center" Margin="0,4"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Name="tbOutputFile" Margin="0,4,140,4"/>
+
+                <!-- Columns -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Columns" VerticalAlignment="Center" Margin="0,4"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Name="tbColumns" Margin="0,4,140,4"/>
+            </Grid>
+
+            <!-- ListBox and buttons -->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="140"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Horizontal ListBox -->
+                <ListBox Name="ImagesListBox" Grid.Column="0" Height="320" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                         ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" IsItemsHost="True"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#DDD" BorderThickness="1" Margin="4">
+                                <StackPanel Width="140" Margin="4">
+                                    <Image Source="{Binding}" Height="80" Stretch="Uniform" />
+                                    <TextBlock Text="{Binding}" TextWrapping="Wrap" FontSize="10" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <!-- Right side buttons -->
+                <StackPanel Grid.Column="1" VerticalAlignment="Top">
+                    <Button Name="btnAdd" Click="Add_Click" Height="30" Margin="0,0,0,8">Add</Button>
+                    <Button Name="btnRemove" Click="Remove_Click" Height="30" Margin="0,0,0,8">Remove</Button>
+                    <Button Name="btnGenerate" Click="Generate_Click" Height="30" Margin="0,8,0,0">Generate</Button>
+                </StackPanel>
+            </Grid>
+
+            <!-- Footer: checkbox and progress bar -->
+            <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,8,0,0" HorizontalAlignment="Left">
+                <CheckBox Name="chkIncludeMeta" IsChecked="True" Margin="0,0,12,0">Save metadata (.json)</CheckBox>
+                <ProgressBar Name="progressBar" Width="300" Height="18" Minimum="0" Maximum="100" Margin="0,0,12,0"/>
+                <TextBlock Name="statusText" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
 </Window>

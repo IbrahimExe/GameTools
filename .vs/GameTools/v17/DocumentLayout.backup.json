@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{24F7FE38-2E1A-4611-9DF6-0F2172ECEB6F}|Assignment_3\\Assignment_3.csproj|c:\\users\\ibrahim\\documents\\github\\gametools\\assignment_3\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{24F7FE38-2E1A-4611-9DF6-0F2172ECEB6F}|Assignment_3\\Assignment_3.csproj|solutionrelative:assignment_3\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{24F7FE38-2E1A-4611-9DF6-0F2172ECEB6F}|Assignment_3\\Assignment_3.csproj|c:\\users\\ibrahim\\documents\\github\\gametools\\assignment_3\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{24F7FE38-2E1A-4611-9DF6-0F2172ECEB6F}|Assignment_3\\Assignment_3.csproj|solutionrelative:assignment_3\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{24F7FE38-2E1A-4611-9DF6-0F2172ECEB6F}|Assignment_3\\Assignment_3.csproj|c:\\users\\ibrahim\\documents\\github\\gametools\\assignment_3\\spritesheetproject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{24F7FE38-2E1A-4611-9DF6-0F2172ECEB6F}|Assignment_3\\Assignment_3.csproj|solutionrelative:assignment_3\\spritesheetproject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -23,12 +31,37 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_3\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "Assignment_3\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_3\\MainWindow.xaml.cs",
+              "RelativeToolTip": "Assignment_3\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAEUBAAAAAAAAAAAnwFgBAABYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-14T23:55:55.603Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_3\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "Assignment_3\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_3\\MainWindow.xaml",
+              "RelativeToolTip": "Assignment_3\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-02-14T23:46:09.018Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "SpriteSheetProject.cs",
               "DocumentMoniker": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_3\\SpriteSheetProject.cs",
               "RelativeDocumentMoniker": "Assignment_3\\SpriteSheetProject.cs",
               "ToolTip": "C:\\Users\\Ibrahim\\Documents\\GitHub\\GameTools\\Assignment_3\\SpriteSheetProject.cs",
               "RelativeToolTip": "Assignment_3\\SpriteSheetProject.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAASAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-14T23:42:45.9Z",
               "EditorCaption": ""
