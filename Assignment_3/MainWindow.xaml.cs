@@ -15,7 +15,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using TextureAtlasLib;
-
+using System.Data.Common;
 
 namespace Assignment_3
 {
@@ -24,18 +24,19 @@ namespace Assignment_3
         private SpriteSheetProject _project = new SpriteSheetProject();
         private string _currentProjectPath = string.Empty;
 
-        // Undo/redo stacks store snapshots of ImagePaths
+        // Undo/Redo stacks
         private readonly Stack<List<string>> _undoStack = new Stack<List<string>>();
         private readonly Stack<List<string>> _redoStack = new Stack<List<string>>();
 
         public MainWindow()
         {
             InitializeComponent();
+
             RefreshUIFromProject();
         }
 
-        #region File menu: New/Open/Save/SaveAs/Exit
 
+        // File menu items
         private void FileNew_Click(object sender, RoutedEventArgs e)
         {
             if (_project.ImagePaths.Any())
@@ -48,9 +49,12 @@ namespace Assignment_3
                         return;
                 }
             }
+
             _project = new SpriteSheetProject();
             _currentProjectPath = string.Empty;
             MenuSave.IsEnabled = false;
+            _undoStack.Clear();
+            _redoStack.Clear();
             RefreshUIFromProject();
         }
 
@@ -63,7 +67,8 @@ namespace Assignment_3
                 try
                 {
                     var proj = LoadProjectFromPath(dlg.FileName);
-                    // check for missing images
+
+                    // Check for missing images
                     var missing = proj.ImagePaths.Where(p => !File.Exists(p)).ToList();
                     if (missing.Count > 0)
                     {
@@ -71,14 +76,17 @@ namespace Assignment_3
                         MessageBox.Show(msg, "Missing files", MessageBoxButton.OK, MessageBoxImage.Warning);
                         proj.ImagePaths = proj.ImagePaths.Where(p => File.Exists(p)).ToList();
                     }
+
                     _project = proj;
                     _currentProjectPath = dlg.FileName;
                     MenuSave.IsEnabled = true;
+                    _undoStack.Clear();
+                    _redoStack.Clear();
                     RefreshUIFromProject();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Failed to load project: " + ex.Message);
+                    MessageBox.Show("Failed to load project: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -87,22 +95,21 @@ namespace Assignment_3
         {
             if (string.IsNullOrWhiteSpace(_currentProjectPath))
             {
-                FileSaveAs();
+                FileSaveAs_Click(sender, e);
                 return;
             }
+
             if (!SaveProjectToPath(_currentProjectPath))
-                MessageBox.Show("Failed to save project.");
+            {
+                MessageBox.Show("Failed to save project.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void FileSaveAs_Click(object sender, RoutedEventArgs e)
         {
-            FileSaveAs();
-        }
-
-        private void FileSaveAs()
-        {
             var dlg = new SaveFileDialog();
             dlg.Filter = "Sprite Project (*.xml)|*.xml|All files (*.*)|*.*";
+            dlg.DefaultExt = ".xml";
             if (dlg.ShowDialog() == true)
             {
                 if (SaveProjectToPath(dlg.FileName))
@@ -112,7 +119,7 @@ namespace Assignment_3
                 }
                 else
                 {
-                    MessageBox.Show("Failed to save project.");
+                    MessageBox.Show("Failed to save project.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -129,20 +136,19 @@ namespace Assignment_3
                         return;
                 }
             }
+
             Application.Current.Shutdown();
         }
 
-        #endregion
-
-        #region Edit menu: Undo/Redo/Copy/Paste/Remove/RemoveAll
-
+ 
+        // Edit menu items
         private void EditUndo_Click(object sender, RoutedEventArgs e)
         {
             if (_undoStack.Any())
             {
                 _redoStack.Push(CloneList(_project.ImagePaths));
                 _project.ImagePaths = _undoStack.Pop();
-                RefreshUIFromProject();
+                RefreshImageListOnly();
             }
         }
 
@@ -152,14 +158,14 @@ namespace Assignment_3
             {
                 _undoStack.Push(CloneList(_project.ImagePaths));
                 _project.ImagePaths = _redoStack.Pop();
-                RefreshUIFromProject();
+                RefreshImageListOnly();
             }
         }
 
         private void EditCopy_Click(object sender, RoutedEventArgs e)
         {
             var selected = ImagesListBox.SelectedItem as string;
-            if (selected != null)
+            if (!string.IsNullOrEmpty(selected))
             {
                 Clipboard.SetText(selected);
             }
@@ -173,7 +179,8 @@ namespace Assignment_3
                 if (File.Exists(text))
                 {
                     PushUndo();
-                    _project.ImagePaths.Add(text);
+                    if (!_project.ImagePaths.Contains(text))
+                        _project.ImagePaths.Add(text);
                     RefreshUIFromProject();
                 }
             }
@@ -197,10 +204,8 @@ namespace Assignment_3
             }
         }
 
-        #endregion
 
-        #region Add / Remove buttons
-
+        // Buttons
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             var dlg = new OpenFileDialog();
@@ -232,6 +237,8 @@ namespace Assignment_3
             RefreshUIFromProject();
         }
 
+
+        // Browse output 
         private void BrowseOutput_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -242,7 +249,6 @@ namespace Assignment_3
                 if (dlg.ShowDialog() == true)
                 {
                     string full = dlg.FileName;
-
                     tbOutputDir.Text = System.IO.Path.GetDirectoryName(full) ?? string.Empty;
                     tbOutputFile.Text = System.IO.Path.GetFileName(full) ?? string.Empty;
                 }
@@ -253,10 +259,95 @@ namespace Assignment_3
             }
         }
 
-        #endregion
 
-        #region Serialization: Save / Load project xml
+        // Generate, loading bar and starting the BackgroundWorker
+        private void Generate_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateProjectFromUI();
 
+            if (!ValidateInputs(out string err))
+            {
+                MessageBox.Show("Cannot generate: " + err, "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var outDir = _project.OutputDirectory;
+            Directory.CreateDirectory(outDir);
+            var outFileFull = System.IO.Path.Combine(outDir, _project.OutputFile);
+
+            // Snapshot columns
+            if (!int.TryParse(tbColumns.Text, out int columns) || columns <= 0)
+                columns = 1;
+
+            // Create BG worker
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = true;
+            worker.DoWork += (s, ev) => DoGenerate(worker, outFileFull, columns);
+            worker.ProgressChanged += (s, ev) => progressBar.Value = ev.ProgressPercentage;
+            worker.RunWorkerCompleted += (s, ev) =>
+            {
+                progressBar.Value = 0;
+                if (ev.Error != null)
+                {
+                    MessageBox.Show("Generation failed: " + ev.Error.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    statusText.Text = "Failed";
+                }
+                else
+                {
+                    statusText.Text = "Done";
+                    MessageBoxResult res = MessageBox.Show("Generated successfully. Open output folder?", "Done", MessageBoxButton.YesNo);
+                    if (res == MessageBoxResult.Yes)
+                    {
+                        try
+                        {
+                            System.Diagnostics.Process.Start("explorer.exe", outDir);
+                        }
+                        catch
+                        {
+                            // ignore errors opening explorer
+                        }
+                    }
+                }
+            };
+
+            statusText.Text = "Working...";
+            worker.RunWorkerAsync();
+        }
+
+        // Background generation
+        private void DoGenerate(BackgroundWorker worker, string outputFileFull, int columns)
+        {
+            var paths = CloneList(_project.ImagePaths);
+
+            if (paths == null || paths.Count == 0)
+                throw new Exception("No images provided.");
+
+            var sheet = new Spritesheet()
+            {
+                Columns = columns,
+                OutputDirectory = _project.OutputDirectory,
+                OutputFile = _project.OutputFile,
+                IncludeMetaData = _project.IncludeMetaData,
+                InputPaths = paths
+            };
+
+            int total = Math.Max(1, paths.Count);
+            for (int i = 0; i < total; i++)
+            {
+                System.Threading.Thread.Sleep(15);
+                int pct = (int)(((double)(i + 1) / total) * 80);
+                worker.ReportProgress(pct);
+            }
+
+
+            sheet.Generate(overwrite: true);
+
+
+            worker.ReportProgress(100);
+        }
+
+
+        // Serialization: Save/Load project XML
         private bool SaveProjectToPath(string path)
         {
             try
@@ -271,7 +362,7 @@ namespace Assignment_3
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed to save project: " + ex.Message);
+                MessageBox.Show("Failed to save project: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
         }
@@ -286,100 +377,8 @@ namespace Assignment_3
             }
         }
 
-        #endregion
 
-        #region Generate (BackgroundWorker placeholder for calling TextureAtlasLib)
-
-        private void Generate_Click(object sender, RoutedEventArgs e)
-        {
-            if (!ValidateInputs(out string err))
-            {
-                MessageBox.Show("Cannot generate: " + err, "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            UpdateProjectFromUI();
-
-            // Build final output path
-            var outDir = _project.OutputDirectory;
-            Directory.CreateDirectory(outDir);
-            var outFileFull = System.IO.Path.Combine(outDir, _project.OutputFile);
-
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.WorkerReportsProgress = true;
-            worker.DoWork += (s, ev) => DoGenerate(worker, outFileFull);
-            worker.ProgressChanged += (s, ev) => progressBar.Value = ev.ProgressPercentage;
-            worker.RunWorkerCompleted += (s, ev) =>
-            {
-                progressBar.Value = 0;
-                if (ev.Error != null)
-                {
-                    MessageBox.Show("Generation failed: " + ev.Error.Message);
-                    statusText.Text = "Failed";
-                }
-                else
-                {
-                    statusText.Text = "Done";
-                    MessageBoxResult res = MessageBox.Show("Generated successfully. Open output folder?", "Done", MessageBoxButton.YesNo);
-                    if (res == MessageBoxResult.Yes)
-                    {
-                        System.Diagnostics.Process.Start("explorer.exe", outDir);
-                    }
-                }
-            };
-            statusText.Text = "Working...";
-            worker.RunWorkerAsync();
-        }
-
-        // Calls TextureAtlasLib.Spritesheet
-        private void DoGenerate(BackgroundWorker worker, string outputFileFull)
-        {
-            // snapshot the current project list
-            var paths = CloneList(_project.ImagePaths);
-
-            if (paths == null || paths.Count == 0)
-                throw new Exception("No images provided.");
-
-            // parse columns
-            int columns = 1;
-            if (!int.TryParse(tbColumns.Text, out columns) || columns <= 0) columns = 1;
-
-            // Prepare the spritesheet object from the TextureAtlasLib
-            var sheet = new Spritesheet()
-            {
-                Columns = columns,
-                OutputDirectory = _project.OutputDirectory,
-                OutputFile = _project.OutputFile,
-                IncludeMetaData = _project.IncludeMetaData,
-                InputPaths = paths
-            };
-
-            try
-            {
-                int total = Math.Max(1, paths.Count);
-                for (int i = 0; i < total; i++)
-                {
-                    System.Threading.Thread.Sleep(10); // small tick so UI shows progress
-                    int pct = (int)(((double)(i + 1) / (total * 2)) * 100.0); 
-                    worker.ReportProgress(Math.Min(pct, 99));
-                }
-
-
-                sheet.Generate(overwrite: true);
-
-
-                worker.ReportProgress(100);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        #endregion
-
-        #region Helpers: UI sync, validation, undo/redo support
-
+        // Helpers
         private void RefreshUIFromProject()
         {
             tbOutputDir.Text = _project.OutputDirectory ?? string.Empty;
@@ -388,8 +387,16 @@ namespace Assignment_3
             chkIncludeMeta.IsChecked = _project.IncludeMetaData;
             ImagesListBox.ItemsSource = null;
             ImagesListBox.ItemsSource = _project.ImagePaths;
+            ImagesListBox.Items.Refresh();
             statusText.Text = string.Empty;
             progressBar.Value = 0;
+        }
+
+        private void RefreshImageListOnly()
+        {
+            ImagesListBox.ItemsSource = null;
+            ImagesListBox.ItemsSource = _project.ImagePaths;
+            ImagesListBox.Items.Refresh();
         }
 
         private void UpdateProjectFromUI()
@@ -397,17 +404,6 @@ namespace Assignment_3
             _project.OutputDirectory = tbOutputDir.Text?.Trim() ?? string.Empty;
             _project.OutputFile = tbOutputFile.Text?.Trim() ?? string.Empty;
             _project.IncludeMetaData = chkIncludeMeta.IsChecked == true;
-        }
-
-        private bool SaveProjectToPathAndEnable(string path)
-        {
-            bool ok = SaveProjectToPath(path);
-            if (ok)
-            {
-                _currentProjectPath = path;
-                MenuSave.IsEnabled = true;
-            }
-            return ok;
         }
 
         private bool ValidateInputs(out string error)
@@ -441,6 +437,8 @@ namespace Assignment_3
         // store snapshot for undo
         private void PushUndo()
         {
+            UpdateProjectFromUI();
+
             _undoStack.Push(CloneList(_project.ImagePaths));
             _redoStack.Clear();
         }
@@ -449,7 +447,5 @@ namespace Assignment_3
         {
             return list == null ? new List<string>() : new List<string>(list);
         }
-
-        #endregion
     }
 }
