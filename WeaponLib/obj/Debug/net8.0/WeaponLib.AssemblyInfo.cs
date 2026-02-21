@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WeaponLib")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b0abb12c54ae4601e8377e3f4221886a312c2a51")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f36636b70e8df328f7c9ad407e6dc5701c5d1f35")]
 [assembly: System.Reflection.AssemblyProductAttribute("WeaponLib")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WeaponLib")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
